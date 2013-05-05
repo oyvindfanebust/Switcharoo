@@ -1,0 +1,19 @@
+<table>
+	<tr>
+		<th>Created</th>
+		<th>Application</th>
+		<th>Feature</th>
+		<th>Local</th>
+		<th>Test</th>
+		<th>Prod</th>
+	</tr>
+	<tr data-bind="foreach: features">
+		<td data-bind="text: created"></td>
+		<td data-bind="text: app"></td>
+		<td data-bind="text: feature"></td>
+		<!-- ko foreach: environments -->
+		<td><input type="checkbox" data-bind="checked: $data.on"></td>
+		<!-- /ko -->
+		<td></td>
+	</tr>
+</table>

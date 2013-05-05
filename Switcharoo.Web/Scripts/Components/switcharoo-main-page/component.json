@@ -1,0 +1,17 @@
+{
+  "name": "switcharoo-main-page",
+  "repo": "oyvindfanebust/switcharoo-main-page",
+  "description": "",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {
+    "component/domify": "*",
+    "oyvindfanebust/knockout": "*"
+  },
+  "development": {},
+  "main": "index.js",
+  "scripts": [
+    "template.js",
+    "index.js"
+  ]
+}
