@@ -8,21 +8,25 @@
 	<script src="build/build.js"></script>
 	<script>
 		var mainPage = require('switcharoo-main-page')
+		var ko = require('knockout')();
 
+		var postbox = ko.subscribable();
+		
 		var data = { 
 			features: [
 			{
+				id: '1',
 				created: '01.02.2013',
 				app: 'App A',
 				feature: 'Feature 1',
 				environments: [ 
-					{ id: '1', name: 'local', on: true },
-					{ id: '2', name: 'test', on: true },
-					{ id: '3', name: 'prod', on: false }
+					{ name: 'local', on: true },
+					{ name: 'test', on: true },
+					{ name: 'prod', on: false }
 				]
 			}] 
 		};
-		mainPage(data).render(document.querySelector('#main'));
+		mainPage(data, postbox).render(document.querySelector('#main'));
 	</script>
 </body>
 </html>

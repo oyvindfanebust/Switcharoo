@@ -1,13 +1,14 @@
 var domify = require('domify');
-var template = require('./template');
 var ko = require('knockout')();
+var template = require('./template');
+var viewModel = require('./featuresViewModel');
 
-module.exports = function (data) {
+module.exports = function (data, postbox) {
 	var page = domify(template)[0];
 
 	function render (node) {
 		node.appendChild(page);
-		ko.applyBindings(data, node);
+		ko.applyBindings(viewModel(data), node);
 	}
 	return { render: render };
 };

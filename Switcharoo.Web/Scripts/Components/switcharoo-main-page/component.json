@@ -2,7 +2,7 @@
   "name": "switcharoo-main-page",
   "repo": "oyvindfanebust/switcharoo-main-page",
   "description": "",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "keywords": [],
   "dependencies": {
     "component/domify": "*",
@@ -12,6 +12,7 @@
   "main": "index.js",
   "scripts": [
     "template.js",
+    "featuresViewModel.js",
     "index.js"
   ]
 }
