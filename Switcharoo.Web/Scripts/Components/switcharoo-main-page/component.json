@@ -12,7 +12,9 @@
   "main": "index.js",
   "scripts": [
     "template.js",
+    "featureViewModel.js",
     "featuresViewModel.js",
+    "environmentViewModel.js",
     "index.js"
   ]
 }

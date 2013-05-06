@@ -1,5 +1,9 @@
+var featureViewModel = require('./featureViewModel');
+
 function featuresViewModel (data) {
-	var features = ko.observableArray(data.features);
+	var models = data.features.map(featureViewModel);
+	var features = ko.observableArray(models);
+
 	return { features: features };
 }
 module.exports = featuresViewModel;
