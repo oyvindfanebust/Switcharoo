@@ -9,9 +9,10 @@
 	<script>
 		var mainPage = require('switcharoo-main-page')
 		var ko = require('knockout')();
+		var Mediator = require('Mediator');
 
-		var postbox = ko.subscribable();
-		
+		var mediator = new Mediator();
+
 		var data = { 
 			features: [
 			{
@@ -26,7 +27,7 @@
 				]
 			}] 
 		};
-		mainPage(data, postbox).render(document.querySelector('#main'));
+		mainPage(data, mediator).render(document.querySelector('#main'));
 	</script>
 </body>
 </html>

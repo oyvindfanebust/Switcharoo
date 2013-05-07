@@ -1,5 +1,5 @@
 var environmentViewModel = require('./environmentViewModel');
-function featureViewModel (data) {
+function featureViewModel (data, mediator) {
 	var id = data.id,
 		created = data.created,
 		app = data.app,
@@ -8,7 +8,7 @@ function featureViewModel (data) {
 
 		environments.forEach(function (env) {
 			env.on.subscribe(function (newValue) {
-				console.log('Setting feature ' + feature + ' in environment ' + env.name() + ' to "' + newValue + '"!');
+				mediator.publish('switch', feature, env.name(), newValue);
 			});
 		});
 	return {

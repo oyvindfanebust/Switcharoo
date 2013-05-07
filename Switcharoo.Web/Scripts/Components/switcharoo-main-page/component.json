@@ -6,7 +6,8 @@
   "keywords": [],
   "dependencies": {
     "component/domify": "*",
-    "oyvindfanebust/knockout": "*"
+    "oyvindfanebust/knockout": "*",
+    "gorillatron/mediator": "*"
   },
   "development": {},
   "main": "index.js",
