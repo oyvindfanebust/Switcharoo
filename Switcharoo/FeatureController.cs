@@ -11,7 +11,7 @@ namespace Switcharoo
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
-        public HttpResponseMessage Put(FeatureSwitch featureSwitch)
+        public HttpResponseMessage Post(FeatureSwitch featureSwitch)
         {
             return Request.CreateResponse(HttpStatusCode.Created);
         }

@@ -14,6 +14,8 @@ namespace Switcharoo.Tests
         //Toggle
         // - in general
         // - for env. x
+        //Caching - etag
+        //Auth
 
         [Test]
         public void getting_root_returns_ok()
@@ -34,7 +36,7 @@ namespace Switcharoo.Tests
                 var featureSwitch = new FeatureSwitch("Feature A");
                 var content = new JsonContent(featureSwitch);
                 content.Headers.ContentType.MediaType = "application/json";
-                var result = client.PutAsync("/", content).Result;
+                var result = client.PostAsync("/", content).Result;
                 
                 Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.Created), result.ToString());
             }
