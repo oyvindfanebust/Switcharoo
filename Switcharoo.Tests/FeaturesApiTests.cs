@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using NUnit.Framework;
 
 namespace Switcharoo.Tests
@@ -47,7 +46,6 @@ namespace Switcharoo.Tests
         {
             using (var client = HttpClientFactory.Create())
             {
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/hal+json"));
                 var content = new JsonContent(new { name = "Feature A" });
                 content.Headers.ContentType.MediaType = "application/json";
                 var resourceLocation = client.PostAsync("/", content).Result.Headers.Location;
