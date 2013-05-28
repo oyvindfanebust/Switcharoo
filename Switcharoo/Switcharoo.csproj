@@ -55,9 +55,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\Resources\FeatureSwitchListRepresentation.cs" />
+    <Compile Include="Api\Resources\FeatureSwitchRepresentation.cs" />
     <Compile Include="Bootstrap.cs" />
-    <Compile Include="FeatureController.cs" />
+    <Compile Include="Api\FeatureController.cs" />
     <Compile Include="FeatureSwitch.cs" />
+    <Compile Include="LinkTemplates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

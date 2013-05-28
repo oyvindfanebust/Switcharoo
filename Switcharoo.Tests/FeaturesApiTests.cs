@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using NUnit.Framework;
-using Newtonsoft.Json;
 
 namespace Switcharoo.Tests
 {
@@ -9,7 +9,7 @@ namespace Switcharoo.Tests
     public class FeaturesApiTests
     {
         //List feature switches
-        // - paging?
+        // - paging via next / previous links
         //CRUD feature switch
         //Toggle
         // - in general
@@ -29,16 +29,34 @@ namespace Switcharoo.Tests
         }
 
         [Test]
-        public void putting_new_feature_switch_returns_created()
+        public void posting_new_feature_switch_returns_uri_for_created_resource()
         {
             using (var client = HttpClientFactory.Create())
             {
-                var featureSwitch = new FeatureSwitch("Feature A");
-                var content = new JsonContent(featureSwitch);
+                var content = new JsonContent(new { name = "Feature A" });
                 content.Headers.ContentType.MediaType = "application/json";
                 var result = client.PostAsync("/", content).Result;
-                
+
                 Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.Created), result.ToString());
+                Assert.That(result.Headers.Location, Is.Not.Null);
+            }
+        }
+
+        [Test]
+        public void can_get_created_feature()
+        {
+            using (var client = HttpClientFactory.Create())
+            {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/hal+json"));
+                var content = new JsonContent(new { name = "Feature A" });
+                content.Headers.ContentType.MediaType = "application/json";
+                var resourceLocation = client.PostAsync("/", content).Result.Headers.Location;
+
+                HttpResponseMessage result = client.GetAsync(resourceLocation).Result;
+                dynamic json = result.Content.ReadAsJsonAsync().Result;
+                string name = json.Name;
+
+                Assert.That(name, Is.EqualTo("Feature A"));
             }
         }
     }
