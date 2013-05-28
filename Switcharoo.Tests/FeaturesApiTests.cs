@@ -54,7 +54,7 @@ namespace Switcharoo.Tests
 
                 HttpResponseMessage result = client.GetAsync(resourceLocation).Result;
                 dynamic json = result.Content.ReadAsJsonAsync().Result;
-                string name = json.Name;
+                string name = json.name;
 
                 Assert.That(name, Is.EqualTo("Feature A"));
             }

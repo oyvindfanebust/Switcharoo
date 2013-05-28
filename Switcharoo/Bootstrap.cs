@@ -18,12 +18,11 @@ namespace Switcharoo
                     id = RouteParameter.Optional
                 });
 
-            config.Formatters.Add(new JsonHalMediaTypeFormatter());
-            config.Formatters.Add(new XmlHalMediaTypeFormatter());
-            config.Formatters.XmlFormatter.UseXmlSerializer = true;
-
-            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
+            var jsonHalMediaTypeFormatter = new JsonHalMediaTypeFormatter();
+            jsonHalMediaTypeFormatter.SerializerSettings.ContractResolver =
                 new CamelCasePropertyNamesContractResolver();
+            config.Formatters.Add(jsonHalMediaTypeFormatter);
+            config.Formatters.Add(new XmlHalMediaTypeFormatter());
         }
     }
 }
