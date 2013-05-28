@@ -1,5 +1,4 @@
-﻿using System.Net.Http.Formatting;
-using System.Web.Http;
+﻿using System.Web.Http;
 using Newtonsoft.Json.Serialization;
 using WebApi.Hal;
 
@@ -18,10 +17,10 @@ namespace Switcharoo
                     id = RouteParameter.Optional
                 });
 
-            var jsonHalMediaTypeFormatter = new JsonHalMediaTypeFormatter();
-            jsonHalMediaTypeFormatter.SerializerSettings.ContractResolver =
-                new CamelCasePropertyNamesContractResolver();
-            config.Formatters.Add(jsonHalMediaTypeFormatter);
+            config.Formatters.Add(new JsonHalMediaTypeFormatter
+                {
+                    SerializerSettings = { ContractResolver = new CamelCasePropertyNamesContractResolver() }
+                });
             config.Formatters.Add(new XmlHalMediaTypeFormatter());
         }
     }
