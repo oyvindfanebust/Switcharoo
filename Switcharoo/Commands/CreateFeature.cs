@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Raven.Abstractions;
 using Switcharoo.Entities;
 
@@ -8,14 +9,14 @@ namespace Switcharoo.Commands
     {
         private readonly Guid _id;
         private readonly string _name;
-        private readonly string[] _environments;
+        private readonly IEnumerable<string> _environments;
 
         public CreateFeature(Guid id, string name)
             : this(id, name, null)
         {
         }
 
-        public CreateFeature(Guid id, string name, string[] environments)
+        public CreateFeature(Guid id, string name, IEnumerable<string> environments)
         {
             _id = id;
             _name = name;

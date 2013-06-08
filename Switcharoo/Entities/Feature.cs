@@ -1,37 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Raven.Abstractions.Extensions;
 
 namespace Switcharoo.Entities
 {
     public class Feature
     {
-        public Feature(Guid id, DateTime addedOn, string name, IList<string> environments)
+        private bool _isActive;
+
+        public Feature(Guid id, DateTime addedOn, string name, IEnumerable<string> environments)
         {
             Id = id;
             AddedOn = addedOn;
             Name = name;
-            Environments = environments;
-            ActiveEnvironments = new List<string>();
+            Environments = new HashSet<string>();
+            if (environments != null)
+                environments.ForEach(e => Environments.Add(e));
+            ActiveEnvironments = new HashSet<string>();
         }
 
         public Guid Id { get; private set; }
         public DateTime AddedOn { get; private set; }
         public string Name { get; private set; }
-        public bool IsActive { get; private set; }
 
-        public IList<string> Environments { get; private set; }
-        private IList<string> ActiveEnvironments { get; set; }
+        public bool IsActive
+        {
+            get { return Environments.Any() ? Environments.SetEquals(ActiveEnvironments) : _isActive; }
+            private set { _isActive = value; }
+        }
+
+        public HashSet<string> Environments { get; private set; }
+        private HashSet<string> ActiveEnvironments { get; set; }
 
         public void Activate()
         {
+            foreach (var environment in Environments)
+            {
+                ActiveEnvironments.Add(environment);
+            }
             IsActive = true;
         }
 
         public void Activate(string environment)
         {
-            if(!Environments.Contains(environment))
+            if (!Environments.Contains(environment))
                 throw new EnvironmentNotFoundException(Name, environment);
-            
+
             ActiveEnvironments.Add(environment);
         }
 

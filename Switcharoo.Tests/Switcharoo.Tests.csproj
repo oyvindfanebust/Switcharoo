@@ -79,8 +79,6 @@
     <Compile Include="Api\HttpClientFactory.cs" />
     <Compile Include="Api\JsonContent.cs" />
     <Compile Include="Environments.cs" />
-    <Compile Include="activating_a_feature_for_a_given_environment.cs" />
-    <Compile Include="creating_a_feature_with_several_environments.cs" />
     <Compile Include="FeatureSpec.cs" />
     <Compile Include="New.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
