@@ -6,74 +6,71 @@ using NUnit.Framework;
 namespace Switcharoo.Tests.Client
 {
     [TestFixture]
-    public class conditionally_executing_features : FeatureSpec
+    public class conditionally_executing_features
     {
-        //Semantic model vs. DSL
-
-        //Not found        
-        //Active env
-        //Not active env
+        //Active in env
+        //Not active in env
 
         [Test]
-        public void should_not_execute_feature_when_feature_is_configured_and_not_active()
+        public void should_not_execute_feature_when_feature_is_inactive()
         {
             var featureUri = new Uri("http://localhost:1337/features/08FEB265-207D-4840-96B2-018A70CAC74A");
             var someBool = false;
 
-            var fakeLookup = A.Fake<ILookupFeatureSwitches>();
-            A.CallTo(() => fakeLookup.IsActive(featureUri)).Returns(false);
+            var lookup = A.Fake<ILookupFeatureSwitches>();
+            A.CallTo(() => lookup.IsActive(featureUri)).Returns(false);
 
-            var switcharoo = new SwitcharooClient(fakeLookup);
-            switcharoo.Configure<FeatureA>(featureUri);
+            var config = A.Fake<IConfigureFeatureSwitches>();
+            A.CallTo(() => config.Get<FeatureA>()).Returns(featureUri);
 
-            switcharoo.WhenActive<FeatureA>(() => someBool = true);
+            var switcharoo = new SwitcharooClient(lookup, config);
+
+            switcharoo.For<FeatureA>(() => someBool = true);
 
             Assert.That(someBool, Is.False);
         }
 
         [Test]
-        public void should_execute_feature_when_feature_is_configured_and_active()
+        public void should_execute_feature_when_feature_is_active()
         {
             var featureUri = new Uri("http://localhost:1337/features/08FEB265-207D-4840-96B2-018A70CAC74A");
             var someBool = false;
 
-            var fakeLookup = A.Fake<ILookupFeatureSwitches>();
-            A.CallTo(() => fakeLookup.IsActive(featureUri)).Returns(true);
+            var lookup = A.Fake<ILookupFeatureSwitches>();
+            A.CallTo(() => lookup.IsActive(featureUri)).Returns(true);
 
-            var switcharoo = new SwitcharooClient(fakeLookup);
-            switcharoo.Configure<FeatureA>(featureUri);
+            var config = A.Fake<IConfigureFeatureSwitches>();
+            A.CallTo(() => config.Get<FeatureA>()).Returns(featureUri);
 
-            switcharoo.WhenActive<FeatureA>(() => someBool = true);
+            var switcharoo = new SwitcharooClient(lookup, config);
+
+            switcharoo.For<FeatureA>(() => someBool = true);
 
             Assert.That(someBool, Is.True);
         }
+    }
 
-        [Test]
-        public void should_throw_when_feature_is_not_configured()
+    public interface IConfigureFeatureSwitches
+    {
+        void Configure<TFeatureSwitch>(Uri uri) where TFeatureSwitch : IFeatureSwitch;
+        Uri Get<TFeatureSwitch>();
+    }
+
+    public class FeatureSwitchConfiguration : IConfigureFeatureSwitches
+    {
+        private readonly Dictionary<Type, Uri> _switches = new Dictionary<Type, Uri>();
+        public void Configure<TFeatureSwitch>(Uri uri) where TFeatureSwitch : IFeatureSwitch
         {
-            var fakeLookup = A.Fake<ILookupFeatureSwitches>();
-
-            var switcharoo = new SwitcharooClient(fakeLookup);
-
-            var exception = Assert.Throws<FeatureNotConfiguredException>(() => switcharoo.WhenActive<FeatureA>(() => { }));
-            Assert.That(exception.Message, Is.StringContaining(typeof(FeatureA).Name));
+            _switches[typeof(TFeatureSwitch)] = uri;
         }
 
-        [Test]
-        public void should_overwrite_feature_uri_when_calling_configuring_feature_a_second_time()
+        public Uri Get<TFeatureSwitch>()
         {
-            var featureUriA = A.Fake<Uri>();
-            var featureUriB = A.Fake<Uri>();
+            var type = typeof(TFeatureSwitch);
+            if(!_switches.ContainsKey(type))
+                throw new FeatureNotConfiguredException(type);
 
-            var lookup = A.Fake<ILookupFeatureSwitches>();
-
-            var switcharoo = new SwitcharooClient(lookup);
-            switcharoo.Configure<FeatureA>(featureUriA);
-            switcharoo.Configure<FeatureA>(featureUriB);
-
-            switcharoo.WhenActive<FeatureA>(() => {});
-
-            A.CallTo(() => lookup.IsActive(featureUriB)).MustHaveHappened();
+            return _switches[type];
         }
     }
 
@@ -96,24 +93,17 @@ namespace Switcharoo.Tests.Client
     public class SwitcharooClient
     {
         private readonly ILookupFeatureSwitches _featureSwichLookup;
-        private readonly Dictionary<Type, Uri> _switches = new Dictionary<Type, Uri>();
-        public SwitcharooClient(ILookupFeatureSwitches featureSwichLookup)
+        private readonly IConfigureFeatureSwitches _configuration;
+
+        public SwitcharooClient(ILookupFeatureSwitches featureSwichLookup, IConfigureFeatureSwitches configuration)
         {
             _featureSwichLookup = featureSwichLookup;
+            _configuration = configuration;
         }
 
-        public void Configure<TFeatureSwitch>(Uri featureUri) where TFeatureSwitch : IFeatureSwitch
+        public void For<TFeatureSwitch>(Action action) where TFeatureSwitch : IFeatureSwitch
         {
-            var featureType = typeof(TFeatureSwitch);
-            _switches[featureType] = featureUri;
-        }
-
-        public void WhenActive<TFeatureSwitch>(Action action) where TFeatureSwitch : IFeatureSwitch
-        {
-            var featureType = typeof(TFeatureSwitch);
-            if(!_switches.ContainsKey(featureType))
-                throw new FeatureNotConfiguredException(featureType);
-            var uri = _switches[featureType];
+            var uri = _configuration.Get<TFeatureSwitch>();
             var isActive = _featureSwichLookup.IsActive(uri);
             if (isActive)
             {
