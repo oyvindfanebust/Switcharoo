@@ -67,6 +67,7 @@
     <Compile Include="Bootstrap.cs" />
     <Compile Include="Api\FeatureController.cs" />
     <Compile Include="Commands\ActivateFeature.cs" />
+    <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\CreateFeature.cs" />
     <Compile Include="Entities\Feature.cs" />
     <Compile Include="FeatureSwitch.cs" />

@@ -1,13 +1,11 @@
 using System;
 using Raven.Abstractions;
-using Raven.Client;
 using Switcharoo.Entities;
 
 namespace Switcharoo.Commands
 {
-    public class CreateFeature
+    public class CreateFeature : Command
     {
-        public IDocumentSession Session { private get; set; }
         private readonly Guid _id;
         private readonly string _name;
 
@@ -17,7 +15,7 @@ namespace Switcharoo.Commands
             _name = name;
         }
 
-        public void Execute()
+        public override void Execute()
         {
             Session.Store(new Feature(_id, SystemTime.UtcNow, _name));
         }

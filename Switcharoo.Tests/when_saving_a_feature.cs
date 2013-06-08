@@ -1,6 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
 using Raven.Abstractions;
+using Raven.Client;
+using Raven.Client.Document;
 using Raven.Client.Embedded;
 using Switcharoo.Commands;
 using Switcharoo.Entities;
@@ -8,7 +10,7 @@ using Switcharoo.Entities;
 namespace Switcharoo.Tests
 {
     [TestFixture]
-    public class when_creating_a_feature
+    public class when_creating_a_feature : FeatureSpec
     {
         [Test]
         public void can_load_feature()
@@ -35,6 +37,33 @@ namespace Switcharoo.Tests
                     Assert.That(feature.Name, Is.EqualTo(featureName));
                     Assert.That(feature.AddedOn, Is.EqualTo(currentTime));
                 }
+            }
+        }
+    }
+
+    public class FeatureSpec
+    {
+        private IDocumentStore _documentStore;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _documentStore = new EmbeddableDocumentStore{ RunInMemory = true };
+            _documentStore.Initialize();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _documentStore.Dispose();
+        }
+
+        public void Execute<TCommand>(TCommand command) where TCommand : Command
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                command.Session = session;
+                command.
             }
         }
     }
