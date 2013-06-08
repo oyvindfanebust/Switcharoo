@@ -80,6 +80,7 @@
     <Compile Include="Api\ContentReader.cs" />
     <Compile Include="Api\FeaturesApiTests.cs" />
     <Compile Include="Client\configuring_feature_switches.cs" />
+    <Compile Include="Client\FeatureA.cs" />
     <Compile Include="HttpClientFactory.cs" />
     <Compile Include="Api\JsonContent.cs" />
     <Compile Include="Client\conditionally_executing_features.cs" />
@@ -95,6 +96,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Switcharoo.Client\Switcharoo.Client.csproj">
+      <Project>{EC37B04B-9962-445F-A58C-44DC266C673A}</Project>
+      <Name>Switcharoo.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Switcharoo\Switcharoo.csproj">
       <Project>{BF325FB6-DCCD-45D9-9949-9F9BAAD15C9E}</Project>
       <Name>Switcharoo</Name>

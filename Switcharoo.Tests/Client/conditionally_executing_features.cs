@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using FakeItEasy;
 using NUnit.Framework;
+using Switcharoo.Client;
 
 namespace Switcharoo.Tests.Client
 {
@@ -48,72 +48,5 @@ namespace Switcharoo.Tests.Client
 
             Assert.That(someBool, Is.True);
         }
-    }
-
-    public interface IConfigureFeatureSwitches
-    {
-        void Configure<TFeatureSwitch>(Uri uri) where TFeatureSwitch : IFeatureSwitch;
-        Uri Get<TFeatureSwitch>();
-    }
-
-    public class FeatureSwitchConfiguration : IConfigureFeatureSwitches
-    {
-        private readonly Dictionary<Type, Uri> _switches = new Dictionary<Type, Uri>();
-        public void Configure<TFeatureSwitch>(Uri uri) where TFeatureSwitch : IFeatureSwitch
-        {
-            _switches[typeof(TFeatureSwitch)] = uri;
-        }
-
-        public Uri Get<TFeatureSwitch>()
-        {
-            var type = typeof(TFeatureSwitch);
-            if(!_switches.ContainsKey(type))
-                throw new FeatureNotConfiguredException(type);
-
-            return _switches[type];
-        }
-    }
-
-    public class FeatureNotConfiguredException : Exception
-    {
-        public FeatureNotConfiguredException(Type featureType)
-            : base(string.Format(@"Feature ""{0}"" is not configured.", featureType.Name))
-        {
-        }
-    }
-
-    public class FeatureA : IFeatureSwitch
-    {
-    }
-
-    public interface IFeatureSwitch
-    {
-    }
-
-    public class SwitcharooClient
-    {
-        private readonly ILookupFeatureSwitches _featureSwichLookup;
-        private readonly IConfigureFeatureSwitches _configuration;
-
-        public SwitcharooClient(ILookupFeatureSwitches featureSwichLookup, IConfigureFeatureSwitches configuration)
-        {
-            _featureSwichLookup = featureSwichLookup;
-            _configuration = configuration;
-        }
-
-        public void For<TFeatureSwitch>(Action action) where TFeatureSwitch : IFeatureSwitch
-        {
-            var uri = _configuration.Get<TFeatureSwitch>();
-            var isActive = _featureSwichLookup.IsActive(uri);
-            if (isActive)
-            {
-                action();
-            }
-        }
-    }
-
-    public interface ILookupFeatureSwitches
-    {
-        bool IsActive(Uri featureUri);
     }
 }

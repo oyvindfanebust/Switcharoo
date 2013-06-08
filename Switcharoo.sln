@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B76E12
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Switcharoo.Client", "Switcharoo.Client\Switcharoo.Client.csproj", "{EC37B04B-9962-445F-A58C-44DC266C673A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{BF325FB6-DCCD-45D9-9949-9F9BAAD15C9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF325FB6-DCCD-45D9-9949-9F9BAAD15C9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF325FB6-DCCD-45D9-9949-9F9BAAD15C9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC37B04B-9962-445F-A58C-44DC266C673A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC37B04B-9962-445F-A58C-44DC266C673A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC37B04B-9962-445F-A58C-44DC266C673A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC37B04B-9962-445F-A58C-44DC266C673A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
