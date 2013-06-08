@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FakeItEasy">
+      <HintPath>..\packages\FakeItEasy.1.12.0\lib\net40\FakeItEasy.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -76,8 +79,9 @@
   <ItemGroup>
     <Compile Include="Api\ContentReader.cs" />
     <Compile Include="Api\FeaturesApiTests.cs" />
-    <Compile Include="Api\HttpClientFactory.cs" />
+    <Compile Include="HttpClientFactory.cs" />
     <Compile Include="Api\JsonContent.cs" />
+    <Compile Include="Client\conditionally_executing_features.cs" />
     <Compile Include="Environments.cs" />
     <Compile Include="FeatureSpec.cs" />
     <Compile Include="New.cs" />
@@ -86,6 +90,7 @@
     <Compile Include="creating_a_feature.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Client\Todo.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
