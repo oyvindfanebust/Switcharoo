@@ -71,7 +71,6 @@
     <Compile Include="Commands\CreateFeature.cs" />
     <Compile Include="Entities\Feature.cs" />
     <Compile Include="EnvironmentNotFoundException.cs" />
-    <Compile Include="FeatureSwitch.cs" />
     <Compile Include="LinkTemplates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

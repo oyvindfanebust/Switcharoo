@@ -10,7 +10,7 @@ namespace Switcharoo.Api
 {
     public class FeaturesController : ApiController
     {
-        private static readonly List<FeatureSwitch> FeatureSwitches = new List<FeatureSwitch>(); 
+        private static readonly List<FeatureSwitchRepresentation> FeatureSwitches = new List<FeatureSwitchRepresentation>(); 
         public HttpResponseMessage Get()
         {
             return Request.CreateResponse(HttpStatusCode.OK);
@@ -19,16 +19,12 @@ namespace Switcharoo.Api
         public HttpResponseMessage Get(Guid id)
         {
             var featureSwitch = FeatureSwitches.Single(fs => fs.Id == id);
-            return Request.CreateResponse(HttpStatusCode.OK, new FeatureSwitchRepresentation
-                {
-                    Id = featureSwitch.Id,
-                    Name = featureSwitch.Name
-                });
+            return Request.CreateResponse(HttpStatusCode.OK, featureSwitch);
         }
 
         public HttpResponseMessage Post(FeatureSwitchRepresentation input)
         {
-            var featureSwitch = new FeatureSwitch(Guid.NewGuid(), input.Name);
+            var featureSwitch = new FeatureSwitchRepresentation(Guid.NewGuid(), input.Name);
             FeatureSwitches.Add(featureSwitch);
             return new HttpResponseMessage(HttpStatusCode.Created)
             {

@@ -5,6 +5,12 @@ namespace Switcharoo.Api.Resources
 {
     public class FeatureSwitchRepresentation : Representation
     {
+        public FeatureSwitchRepresentation(Guid id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+
         public Guid Id { get; set; }
         public string Name { get; set; }
 
