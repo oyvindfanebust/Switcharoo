@@ -1,7 +1,5 @@
 using System;
 using NUnit.Framework;
-using Raven.Abstractions;
-using Raven.Client.Embedded;
 using Switcharoo.Commands;
 using Switcharoo.Entities;
 
@@ -14,10 +12,7 @@ namespace Switcharoo.Tests
         public void feature_is_active()
         {
             var featureId = Guid.NewGuid();
-            const string featureName = "Feature A";
-            var currentTime = new DateTime(2013, 6, 8);
-            SystemTime.UtcDateTime = () => currentTime;
-            var command = new CreateFeature(featureId, featureName);
+            var command = New.CreateFeature(featureId);
             Execute(command);
 
             var activateFeature = new ActivateFeature(featureId);
