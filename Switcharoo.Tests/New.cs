@@ -10,5 +10,11 @@ namespace Switcharoo.Tests
             const string featureName = "Feature A";
             return new CreateFeature(id, featureName);
         }
+
+        public static Command CreateFeatureWithEnvironments(Guid id)
+        {
+            const string featureName = "Feature A";
+            return new CreateFeature(id, featureName, new[] { Environments.Dev, Environments.Test, Environments.Prod });
+        }
     }
 }
