@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using Newtonsoft.Json;
 
-namespace Switcharoo.Tests
+namespace Switcharoo.Tests.Api
 {
     public class JsonContent : StringContent
     {

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Newtonsoft.Json;
 
-namespace Switcharoo.Tests
+namespace Switcharoo.Tests.Api
 {
     public static class ContentReader
     {

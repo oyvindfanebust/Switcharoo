@@ -61,10 +61,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContentReader.cs" />
-    <Compile Include="FeaturesApiTests.cs" />
-    <Compile Include="HttpClientFactory.cs" />
-    <Compile Include="JsonContent.cs" />
+    <Compile Include="Api\ContentReader.cs" />
+    <Compile Include="Api\FeaturesApiTests.cs" />
+    <Compile Include="Api\HttpClientFactory.cs" />
+    <Compile Include="Api\JsonContent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

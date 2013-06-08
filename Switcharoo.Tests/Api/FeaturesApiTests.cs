@@ -2,7 +2,7 @@
 using System.Net.Http;
 using NUnit.Framework;
 
-namespace Switcharoo.Tests
+namespace Switcharoo.Tests.Api
 {
     [TestFixture]
     public class FeaturesApiTests

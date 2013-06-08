@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http.SelfHost;
 
-namespace Switcharoo.Tests
+namespace Switcharoo.Tests.Api
 {
     public class HttpClientFactory
     {
