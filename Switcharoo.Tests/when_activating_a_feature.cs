@@ -8,35 +8,24 @@ using Switcharoo.Entities;
 namespace Switcharoo.Tests
 {
     [TestFixture]
-    public class when_activating_a_feature
+    public class when_activating_a_feature : FeatureSpec
     {
         [Test]
         public void feature_is_active()
         {
-            using (var documentStore = new EmbeddableDocumentStore { RunInMemory = true })
-            {
-                documentStore.Initialize();
-                var featureId = Guid.NewGuid();
-                using (var session = documentStore.OpenSession())
-                {
-                    const string featureName = "Feature A";
-                    var currentTime = new DateTime(2013, 6, 8);
-                    var command = new CreateFeature(featureId, featureName) {Session = session};
-                    SystemTime.UtcDateTime = () => currentTime;
+            var featureId = Guid.NewGuid();
+            const string featureName = "Feature A";
+            var currentTime = new DateTime(2013, 6, 8);
+            SystemTime.UtcDateTime = () => currentTime;
+            var command = new CreateFeature(featureId, featureName);
+            Execute(command);
 
-                    command.Execute();
-                    session.SaveChanges();
-                }
-                using (var session = documentStore.OpenSession())
-                {
-                    var activateFeature = new ActivateFeature(featureId){Session = session};
-                    activateFeature.Execute();
+            var activateFeature = new ActivateFeature(featureId);
+            Execute(activateFeature);
 
-                    var feature = session.Load<Feature>(featureId);
+            var feature = Load<Feature>(featureId);
 
-                    Assert.That(feature.IsActive, Is.True);
-                }
-            }
+            Assert.That(feature.IsActive, Is.True);
         }
     }
 }

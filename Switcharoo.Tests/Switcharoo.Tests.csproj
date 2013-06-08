@@ -78,6 +78,7 @@
     <Compile Include="Api\FeaturesApiTests.cs" />
     <Compile Include="Api\HttpClientFactory.cs" />
     <Compile Include="Api\JsonContent.cs" />
+    <Compile Include="FeatureSpec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="when_activating_a_feature.cs" />
     <Compile Include="when_saving_a_feature.cs" />
