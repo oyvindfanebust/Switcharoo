@@ -74,4 +74,62 @@ namespace Switcharoo.Tests.Client
             Assert.That(inactiveCalled, Is.False);
         }
     }
+
+    [TestFixture]
+    public class conditionally_executing_feature_func
+    {
+        private static readonly Uri featureUri = new Uri("http://localhost:1337/features/08FEB265-207D-4840-96B2-018A70CAC74A");
+        private ILookupFeatureSwitches lookup;
+        private IConfigureFeatureSwitches config;
+        private SwitcharooClient switcharoo;
+
+        [SetUp]
+        public void SetUp()
+        {
+            lookup = A.Fake<ILookupFeatureSwitches>();
+            config = A.Fake<IConfigureFeatureSwitches>();
+            A.CallTo(() => config.Get<FeatureA>()).Returns(featureUri);
+            switcharoo = new SwitcharooClient(lookup, config);
+        }
+
+        [Test]
+        public void calling_with_single_func_should_return_default_when_feature_is_inactive()
+        {
+            A.CallTo(() => lookup.IsActive(featureUri)).Returns(false);
+
+            var result = switcharoo.For<FeatureA, string>(() => "called");
+
+            Assert.That(result, Is.Null);
+        }
+
+        [Test]
+        public void calling_with_two_funcs_should_return_inactive_result_when_feature_is_inactive()
+        {
+            A.CallTo(() => lookup.IsActive(featureUri)).Returns(false);
+
+            var result = switcharoo.For<FeatureA, string>(() => "active", () => "inactive");
+
+            Assert.That(result, Is.EqualTo("inactive"));
+        }
+
+        [Test]
+        public void calling_with_single_func_should_return_result_when_feature_is_active()
+        {
+            A.CallTo(() => lookup.IsActive(featureUri)).Returns(true);
+
+            var result = switcharoo.For<FeatureA, string>(() => "called");
+
+            Assert.That(result, Is.EqualTo("called"));
+        }
+
+        [Test]
+        public void calling_with_two_funcs_should_return_active_result_when_feature_is_active()
+        {
+            A.CallTo(() => lookup.IsActive(featureUri)).Returns(true);
+
+            var result = switcharoo.For<FeatureA, string>(() => "active", () => "inactive");
+
+            Assert.That(result, Is.EqualTo("active"));
+        }
+    }
 }
