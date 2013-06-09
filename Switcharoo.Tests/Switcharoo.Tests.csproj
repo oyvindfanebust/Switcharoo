@@ -85,7 +85,7 @@
     <Compile Include="Api\JsonContent.cs" />
     <Compile Include="Client\conditionally_executing_features.cs" />
     <Compile Include="Environments.cs" />
-    <Compile Include="FeatureSpec.cs" />
+    <Compile Include="SwitcharooSpec.cs" />
     <Compile Include="New.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="activating_a_feature.cs" />

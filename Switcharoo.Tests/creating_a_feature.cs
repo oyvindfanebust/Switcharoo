@@ -7,7 +7,7 @@ using Switcharoo.Entities;
 namespace Switcharoo.Tests
 {
     [TestFixture]
-    public class creating_a_feature : FeatureSpec
+    public class creating_a_feature : SwitcharooSpec
     {
         [Test]
         public void can_create_feature()

@@ -6,7 +6,7 @@ using Switcharoo.Commands;
 
 namespace Switcharoo.Tests
 {
-    public class FeatureSpec
+    public class SwitcharooSpec
     {
         private IDocumentStore _documentStore;
 

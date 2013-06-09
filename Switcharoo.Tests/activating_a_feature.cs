@@ -6,7 +6,7 @@ using Switcharoo.Entities;
 namespace Switcharoo.Tests
 {
     [TestFixture]
-    public class activating_a_feature : FeatureSpec
+    public class activating_a_feature : SwitcharooSpec
     {
         [Test]
         public void feature_is_active_when_no_environment_is_specified()
