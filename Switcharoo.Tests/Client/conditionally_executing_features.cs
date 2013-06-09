@@ -8,9 +8,6 @@ namespace Switcharoo.Tests.Client
     [TestFixture]
     public class conditionally_executing_features
     {
-        //Active in env
-        //Not active in env
-
         [Test]
         public void should_not_execute_feature_when_feature_is_inactive()
         {

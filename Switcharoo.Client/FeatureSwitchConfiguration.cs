@@ -5,10 +5,17 @@ namespace Switcharoo.Client
 {
     public class FeatureSwitchConfiguration : IConfigureFeatureSwitches
     {
+        private readonly Uri _baseUri;
         private readonly Dictionary<Type, Uri> _switches = new Dictionary<Type, Uri>();
-        public void Configure<TFeatureSwitch>(Uri uri) where TFeatureSwitch : IFeatureSwitch
+
+        public FeatureSwitchConfiguration(string baseUri)
         {
-            _switches[typeof(TFeatureSwitch)] = uri;
+            _baseUri = new Uri(baseUri);
+        }
+
+        public void Configure<TFeatureSwitch>(string relativeUri) where TFeatureSwitch : IFeatureSwitch
+        {
+            _switches[typeof(TFeatureSwitch)] = new Uri(_baseUri, relativeUri);
         }
 
         public Uri Get<TFeatureSwitch>()
