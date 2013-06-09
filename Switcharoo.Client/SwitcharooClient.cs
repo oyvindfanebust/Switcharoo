@@ -13,13 +13,17 @@ namespace Switcharoo.Client
             _configuration = configuration;
         }
 
-        public void For<TFeatureSwitch>(Action action) where TFeatureSwitch : IFeatureSwitch
+        public void For<TFeatureSwitch>(Action activeAction, Action inactiveAction = null) where TFeatureSwitch : IFeatureSwitch
         {
             var uri = _configuration.Get<TFeatureSwitch>();
             var isActive = _featureSwichLookup.IsActive(uri);
             if (isActive)
             {
-                action();
+                activeAction();
+            }
+            else if (inactiveAction != null)
+            {
+                inactiveAction();
             }
         }
     }
