@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using System.Net.Http;
-using NUnit.Framework;
+using Should;
+using Xunit;
 
 namespace Switcharoo.Tests.Api
 {
-    [TestFixture]
     public class FeaturesApiTests
     {
         //List feature switches
@@ -16,18 +16,18 @@ namespace Switcharoo.Tests.Api
         //Caching - etag
         //Auth
 
-        [Test]
+        [Fact]
         public void getting_root_returns_ok()
         {
             using (var client = HttpClientFactory.Create())
             {
                 var response = client.GetAsync("/").Result;
 
-                Assert.That(response.IsSuccessStatusCode, Is.True, string.Format("Actual status code: {0}", response.StatusCode));
+                response.IsSuccessStatusCode.ShouldBeTrue(string.Format("Actual status code: {0}", response.StatusCode));
             }
         }
 
-        [Test]
+        [Fact]
         public void posting_new_feature_switch_returns_uri_for_created_resource()
         {
             using (var client = HttpClientFactory.Create())
@@ -36,12 +36,12 @@ namespace Switcharoo.Tests.Api
                 content.Headers.ContentType.MediaType = "application/json";
                 var result = client.PostAsync("/", content).Result;
 
-                Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.Created), result.ToString());
-                Assert.That(result.Headers.Location, Is.Not.Null);
+                result.StatusCode.ShouldEqual(HttpStatusCode.Created, result.ToString());
+                result.Headers.Location.ShouldNotBeNull();
             }
         }
 
-        [Test]
+        [Fact]
         public void can_get_created_feature()
         {
             using (var client = HttpClientFactory.Create())
@@ -54,7 +54,7 @@ namespace Switcharoo.Tests.Api
                 dynamic json = result.Content.ReadAsJsonAsync().Result;
                 string name = json.name;
 
-                Assert.That(name, Is.EqualTo("Feature A"));
+                name.ShouldEqual("Feature A");
             }
         }
     }

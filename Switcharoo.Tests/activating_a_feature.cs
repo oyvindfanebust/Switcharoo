@@ -1,14 +1,15 @@
 using System;
-using NUnit.Framework;
+using Should;
+using Xunit;
 using Switcharoo.Commands;
 using Switcharoo.Entities;
 
 namespace Switcharoo.Tests
 {
-    [TestFixture]
+
     public class activating_a_feature : SwitcharooSpec
     {
-        [Test]
+        [Fact]
         public void feature_is_active_when_no_environment_is_specified()
         {
             var featureId = Guid.NewGuid();
@@ -20,10 +21,10 @@ namespace Switcharoo.Tests
 
             var feature = Load<Feature>(featureId);
 
-            Assert.That(feature.IsActive, Is.True);
+            feature.IsActive.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void feature_is_active_only_in_activated_environment()
         {
             var featureId = Guid.NewGuid();
@@ -35,12 +36,12 @@ namespace Switcharoo.Tests
 
             var feature = Load<Feature>(featureId);
 
-            Assert.That(feature.IsActiveIn(Environments.Dev), Is.True);
-            Assert.That(feature.IsActiveIn(Environments.Test), Is.False);
-            Assert.That(feature.IsActiveIn(Environments.Prod), Is.False);
+            feature.IsActiveIn(Environments.Dev).ShouldBeTrue();
+            feature.IsActiveIn(Environments.Test).ShouldBeFalse();
+            feature.IsActiveIn(Environments.Prod).ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void can_activate_feature_for_all_environments()
         {
             var featureId = Guid.NewGuid();
@@ -50,12 +51,12 @@ namespace Switcharoo.Tests
 
             var feature = Load<Feature>(featureId);
 
-            Assert.That(feature.IsActiveIn(Environments.Dev), Is.True);
-            Assert.That(feature.IsActiveIn(Environments.Test), Is.True);
-            Assert.That(feature.IsActiveIn(Environments.Prod), Is.True);
+            feature.IsActiveIn(Environments.Dev).ShouldBeTrue();
+            feature.IsActiveIn(Environments.Test).ShouldBeTrue();
+            feature.IsActiveIn(Environments.Prod).ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void feature_is_active_if_all_environments_are_active()
         {
             var featureId = Guid.NewGuid();
@@ -67,10 +68,10 @@ namespace Switcharoo.Tests
 
             var feature = Load<Feature>(featureId);
 
-           Assert.That(feature.IsActive, Is.True);
+           feature.IsActive.ShouldBeTrue();
         }
 
-        [Test]
+        [Fact]
         public void feature_is_not_active_if_some_environments_are_not_active()
         {
             var featureId = Guid.NewGuid();
@@ -80,10 +81,10 @@ namespace Switcharoo.Tests
 
             var feature = Load<Feature>(featureId);
 
-            Assert.That(feature.IsActive, Is.False);
+            feature.IsActive.ShouldBeFalse();
         }
 
-        [Test]
+        [Fact]
         public void throws_if_trying_to_activate_non_existing_environment()
         {
             var featureId = Guid.NewGuid();

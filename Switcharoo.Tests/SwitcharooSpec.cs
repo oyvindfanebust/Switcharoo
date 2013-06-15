@@ -1,5 +1,4 @@
 ﻿using System;
-using NUnit.Framework;
 using Raven.Client;
 using Raven.Client.Embedded;
 using Switcharoo.Commands;
@@ -8,19 +7,12 @@ namespace Switcharoo.Tests
 {
     public class SwitcharooSpec
     {
-        private IDocumentStore _documentStore;
+        private static readonly IDocumentStore _documentStore;
 
-        [SetUp]
-        public void SetUp()
+        static SwitcharooSpec()
         {
             _documentStore = new EmbeddableDocumentStore { RunInMemory = true };
             _documentStore.Initialize();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            _documentStore.Dispose();
         }
 
         public void Execute<TCommand>(TCommand command) where TCommand : Command

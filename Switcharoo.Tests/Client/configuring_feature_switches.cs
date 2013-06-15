@@ -1,15 +1,15 @@
-﻿using NUnit.Framework;
+﻿using Should;
+using Xunit;
 using Switcharoo.Client;
 
 namespace Switcharoo.Tests.Client
 {
-    [TestFixture]
     public class configuring_feature_switches
     {
         //Active in env
         //Not active in env
 
-        [Test]
+        [Fact]
         public void get_returns_uri_for_configured_feature_swich()
         {
             const string relativeUri = "/features/08FEB265-207D-4840-96B2-018A70CAC74A";
@@ -18,18 +18,18 @@ namespace Switcharoo.Tests.Client
 
             var uri = configuration.Get<FeatureA>();
 
-            Assert.That(uri.LocalPath, Is.EqualTo(relativeUri));
+            uri.LocalPath.ShouldEqual(relativeUri);
         }
 
-        [Test]
+        [Fact]
         public void get_throws_when_feature_is_not_configured()
         {
             var configuration = new FeatureSwitchConfiguration("http://localhost:1337/");
             var exception = Assert.Throws<FeatureNotConfiguredException>(() => configuration.Get<FeatureA>());
-            Assert.That(exception.Message, Is.StringContaining(typeof(FeatureA).Name));
+            exception.Message.ShouldContain(typeof(FeatureA).Name);
         }
 
-        [Test]
+        [Fact]
         public void configuring_feature_twice_overwrites_first_feature()
         {
             const string relativeUri1 = "/features/08FEB265-207D-4840-96B2-018A70CAC74A";
@@ -40,7 +40,7 @@ namespace Switcharoo.Tests.Client
 
             var uri = configuration.Get<FeatureA>();
 
-            Assert.That(uri.LocalPath, Is.EqualTo(relativeUri2));
+            uri.LocalPath.ShouldEqual(relativeUri2);
         }
     }
 }

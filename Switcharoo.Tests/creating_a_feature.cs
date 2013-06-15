@@ -1,15 +1,16 @@
 ﻿using System;
-using NUnit.Framework;
+using System.Linq;
+using Should;
+using Xunit;
 using Raven.Abstractions;
 using Switcharoo.Commands;
 using Switcharoo.Entities;
 
 namespace Switcharoo.Tests
 {
-    [TestFixture]
     public class creating_a_feature : SwitcharooSpec
     {
-        [Test]
+        [Fact]
         public void can_create_feature()
         {
             var featureId = Guid.NewGuid();
@@ -22,12 +23,12 @@ namespace Switcharoo.Tests
             
             var feature = Load<Feature>(featureId);
 
-            Assert.That(feature, Is.Not.Null);
-            Assert.That(feature.Name, Is.EqualTo(featureName));
-            Assert.That(feature.AddedOn, Is.EqualTo(currentTime));
+            feature.ShouldNotBeNull();
+            feature.Name.ShouldEqual(featureName);
+            feature.AddedOn.ShouldEqual(currentTime);
         }
 
-        [Test]
+        [Fact]
         public void can_create_feature_with_multiple_environments()
         {
             var featureId = Guid.NewGuid();
@@ -41,8 +42,8 @@ namespace Switcharoo.Tests
 
             var feature = Load<Feature>(featureId);
 
-            Assert.That(feature, Is.Not.Null);
-            Assert.That(feature.Environments, Is.EqualTo(environments));
+            feature.ShouldNotBeNull();
+            feature.Environments.ToArray().ShouldEqual(environments);
         }
 
     }
