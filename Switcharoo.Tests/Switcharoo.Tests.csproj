@@ -87,11 +87,9 @@
     <Compile Include="HttpClientFactory.cs" />
     <Compile Include="Api\JsonContent.cs" />
     <Compile Include="Client\conditionally_executing_feature_action.cs" />
-    <Compile Include="Environments.cs" />
     <Compile Include="SwitcharooSpec.cs" />
     <Compile Include="New.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="activating_a_feature.cs" />
     <Compile Include="creating_a_feature.cs" />
   </ItemGroup>
   <ItemGroup>
