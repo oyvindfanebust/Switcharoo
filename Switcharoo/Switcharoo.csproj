@@ -68,7 +68,13 @@
     <Compile Include="Api\FeatureController.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\CreateFeature.cs" />
+    <Compile Include="Entities\ICondition.cs" />
+    <Compile Include="Entities\MultiCondition.cs" />
     <Compile Include="Entities\Feature.cs" />
+    <Compile Include="Entities\InstanceData.cs" />
+    <Compile Include="Entities\ISatisfyConditions.cs" />
+    <Compile Include="Entities\SimpleCondition.cs" />
+    <Compile Include="Entities\Switch.cs" />
     <Compile Include="LinkTemplates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
