@@ -80,7 +80,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="checking_conditions.cs" />
+    <Compile Include="switching_features.cs" />
     <Compile Include="Api\ContentReader.cs" />
     <Compile Include="Api\FeaturesApiTests.cs" />
     <Compile Include="Client\configuring_feature_switches.cs" />
