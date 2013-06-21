@@ -1,4 +1,7 @@
-﻿using Should;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Should;
 using Xunit;
 using Switcharoo.Client;
 
@@ -42,6 +45,33 @@ namespace Switcharoo.Tests.Client
             var uri = configuration.Get<FeatureA>();
 
             uri.LocalPath.ShouldEqual(relativeUri2);
+        }
+
+        [Fact]
+        public void can_configure_static_instance_property()
+        {
+            var configuration = new FeatureSwitchConfiguration("http://localhost:1337/");
+            configuration.ConfigureInstanceProperty("environment", new[] { "dev" });
+
+            var property = configuration.GetInstanceProperties("environment").Single();
+
+            property.ShouldEqual("dev");
+        }
+
+        private static string[] _environments;
+
+        [Fact]
+        public void can_configure_dynamic_instance_property()
+        {
+            _environments = new string[0];
+            Func<IEnumerable<string>> func = () => _environments;
+            var configuration = new FeatureSwitchConfiguration("http://localhost:1337/");
+            configuration.ConfigureInstanceProperty("environment", func);
+            _environments = new[] {"dev"};
+
+            var property = configuration.GetInstanceProperties("environment").Single();
+
+            property.ShouldEqual("dev");
         }
     }
 }
