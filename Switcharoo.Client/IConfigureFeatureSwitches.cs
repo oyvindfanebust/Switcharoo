@@ -4,7 +4,7 @@ namespace Switcharoo.Client
 {
     public interface IConfigureFeatureSwitches
     {
-        void Configure<TFeatureSwitch>(string uri) where TFeatureSwitch : IFeatureSwitch;
+        void ConfigureFeature<TFeatureSwitch>(string uri) where TFeatureSwitch : IFeatureSwitch;
         Uri Get<TFeatureSwitch>();
     }
 }

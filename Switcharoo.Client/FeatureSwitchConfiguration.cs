@@ -13,7 +13,7 @@ namespace Switcharoo.Client
             _baseUri = new Uri(baseUri);
         }
 
-        public void Configure<TFeatureSwitch>(string relativeUri) where TFeatureSwitch : IFeatureSwitch
+        public void ConfigureFeature<TFeatureSwitch>(string relativeUri) where TFeatureSwitch : IFeatureSwitch
         {
             _switches[typeof(TFeatureSwitch)] = new Uri(_baseUri, relativeUri);
         }

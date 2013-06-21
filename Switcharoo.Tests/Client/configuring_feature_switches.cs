@@ -14,7 +14,8 @@ namespace Switcharoo.Tests.Client
         {
             const string relativeUri = "/features/08FEB265-207D-4840-96B2-018A70CAC74A";
             var configuration = new FeatureSwitchConfiguration("http://localhost:1337/");
-            configuration.Configure<FeatureA>(relativeUri);
+
+            configuration.ConfigureFeature<FeatureA>(relativeUri);
 
             var uri = configuration.Get<FeatureA>();
 
@@ -35,8 +36,8 @@ namespace Switcharoo.Tests.Client
             const string relativeUri1 = "/features/08FEB265-207D-4840-96B2-018A70CAC74A";
             const string relativeUri2 = "/features/6AE913D0-D289-4533-ACD4-8B6DE3C72223";
             var configuration = new FeatureSwitchConfiguration("http://localhost:1337/");
-            configuration.Configure<FeatureA>(relativeUri1);
-            configuration.Configure<FeatureA>(relativeUri2);
+            configuration.ConfigureFeature<FeatureA>(relativeUri1);
+            configuration.ConfigureFeature<FeatureA>(relativeUri2);
 
             var uri = configuration.Get<FeatureA>();
 
